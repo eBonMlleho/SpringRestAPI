@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/employees")
 public class EmployeeController {
     private final ModelMapper modelMapper;
 
@@ -24,7 +25,7 @@ public class EmployeeController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/employees")
+    @GetMapping()
     public ResponseEntity<List<EmployeeDepartmentDTO>> getAll() {
         return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
     }
@@ -39,7 +40,7 @@ public class EmployeeController {
     }
 
 
-    @PostMapping("/employees")
+    @PostMapping()
     public ResponseEntity<EmployeeDepartmentDTO> createEmployee(@RequestBody Employee newEmployee) {
         Employee employee = employeeService.addNewEmployee(newEmployee);
         // convert entity to DTO
@@ -47,13 +48,20 @@ public class EmployeeController {
     }
 
 
-    @PutMapping("/employees/{employeeID}")
+    @PutMapping("/{employeeID}")
     void updateEmployee(@PathVariable("employeeID") Long id, @RequestParam(required = false) String name){
-        employeeService.updateStudent(id, name);
+        employeeService.updateEmplpyee(id, name);
+    }
+
+    @PutMapping("/{employeeID}/departments/{departmentID}")
+    void updateEmployeeWithDepartment(@PathVariable("employeeID") Long employeeID,
+                                      @PathVariable("departmentID") Long departmentID,
+                                      @RequestParam(required = false) String name){
+        employeeService.updateEmployeeDepartment(employeeID, departmentID);
     }
 
 
-    @DeleteMapping("/employees/{employeeID}")
+    @DeleteMapping("/{employeeID}")
     public ResponseEntity deleteStudent(@PathVariable("employeeID") Long id){
         employeeService.deleteEmployee(id);
         return new ResponseEntity<>("delete successful", HttpStatus.OK);
@@ -63,7 +71,7 @@ public class EmployeeController {
      * this is for testing purpose. use it when comparing DTO and ModelMapper and ResponseEntity
      * @return
      */
-    @GetMapping("/employees/showeverything")
+    @GetMapping("/showeverything")
     public List<Employee> getEverything(){
         return employeeService.getEmployeesEverything();
     }

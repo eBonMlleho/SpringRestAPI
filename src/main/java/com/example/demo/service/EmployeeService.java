@@ -2,7 +2,9 @@ package com.example.demo.service;
 
 
 import com.example.demo.dto.EmployeeDepartmentDTO;
+import com.example.demo.model.Department;
 import com.example.demo.model.Employee;
+import com.example.demo.repository.DepartmentRepository;
 import com.example.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,12 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
+    private final DepartmentRepository departmentRepository;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, DepartmentRepository departmentRepository) {
         this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     // this method used convertEntityToDTO method to populate DTO from employees
@@ -59,7 +63,7 @@ public class EmployeeService {
     }
 
     @Transactional // repository 里面就不用 写 query 了
-    public void updateStudent(long employeeID, String name) {
+    public void updateEmplpyee(long employeeID, String name) {
         Employee employee = employeeRepository.findById(employeeID)
                 .orElseThrow(()->new IllegalStateException("employee ID:" + employeeID + " does not exist"));
 
@@ -73,10 +77,17 @@ public class EmployeeService {
         EmployeeDepartmentDTO employeeDepartmentDTO = new EmployeeDepartmentDTO();
         employeeDepartmentDTO.setEmployeeID(employee.getId());
         employeeDepartmentDTO.setEmployeeName(employee.getName());
-//        employeeDepartmentDTO.setDepartmentName(employee.getDepartmentName());
+        employeeDepartmentDTO.setDepartments(employee.getDepartments());
         return employeeDepartmentDTO;
     }
 
 
-
+    public void updateEmployeeDepartment(Long employeeID, Long departmentID) {
+        Employee employee = employeeRepository.findById(employeeID)
+                .orElseThrow(()->new IllegalStateException("employee ID:" + employeeID + " does not exist"));
+        Department department = departmentRepository.findById(departmentID)
+                .orElseThrow(()->new IllegalStateException("department ID:" + departmentID + " does not exist"));
+        employee.enrollDepartment(department);
+//        employeeRepository.save(employee);
+    }
 }
