@@ -7,8 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
 public class EmployeeDepartmentConfig {
     @Bean
@@ -16,15 +14,15 @@ public class EmployeeDepartmentConfig {
                                         Employee_DepartmentRepository edRepository,
                                         DepartmentRepository departmentRepository){
         return args -> {
-            Department d1 = new Department("Marketing");
-            Department d2 = new Department("Sales");
+//            Department d1 = new Department("Marketing");
+//            Department d2 = new Department("Sales");
 //            departmentRepository.saveAll(List.of(d1, d2 ));
 
             // employee test only.
-            Employee bella = new Employee("bella", "bella@gmail.com","this isBella secret");
-            Employee ebon = new Employee("ebon", "ebon@gmail.com", "ebon's secret");
-            Employee luke = new Employee("luke", "luke@gmail.com", "luke's gay");
-            employeeRepository.saveAll(List.of(bella, ebon, luke));
+//            Employee bella = new Employee("bella", "bella@gmail.com","this isBella secret");
+//            Employee ebon = new Employee("ebon", "ebon@gmail.com", "ebon's secret");
+//            Employee luke = new Employee("luke", "luke@gmail.com", "luke's gay");
+//            employeeRepository.saveAll(List.of(bella, ebon, luke));
 
 
 
