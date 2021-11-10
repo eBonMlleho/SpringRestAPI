@@ -1,6 +1,6 @@
 # SpringRestAPI
 
-Main entity: Employee
+Main entity: Employee\
 minor: Department
 
 ### Features
