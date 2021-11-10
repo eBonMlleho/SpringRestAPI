@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DepartmentService {
+public class DepartmentService implements DepartmentServiceInterface{
     private final DepartmentRepository departmentRepository;
 
     @Autowired

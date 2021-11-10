@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class EmployeeService {
+public class EmployeeService implements EmployeeServiceInterface{
     private final EmployeeRepository employeeRepository;
     private final DepartmentRepository departmentRepository;
 
