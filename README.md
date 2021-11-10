@@ -9,7 +9,7 @@ ResponseEntity √ \
 @ManyToMany relation √\
 ExceptionHandler Class √\
 Override JPA using @Query √\
-Interface for Service layer
+Interface for Service layer √
 
 ### Employee API functions
 getbyID()\
