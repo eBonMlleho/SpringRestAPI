@@ -36,7 +36,7 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeById(long id) {
-        Optional<Employee> result = employeeRepository.findById(id);
+        Optional<Employee> result = employeeRepository.findEmployeeById(id);
         if(result.isPresent()) {
             return result.get();
         }else {
@@ -46,11 +46,11 @@ public class EmployeeService {
 
 
     public Employee addNewEmployee(Employee employee) {
-        Optional<Employee> employeeOptional = employeeRepository.findEmployeeByName(employee.getName());
-
-        if(employeeOptional.isPresent()){
-            throw new IllegalStateException("name is taken");
-        }
+//        Optional<Employee> employeeOptional = employeeRepository.findEmployeeByName(employee.getName());
+//
+//        if(employeeOptional.isPresent()){
+//            throw new IllegalStateException("name is taken");
+//        }
         employeeRepository.save(employee);
         return employee;
     }
@@ -63,7 +63,7 @@ public class EmployeeService {
     }
 
     @Transactional // repository 里面就不用 写 query 了
-    public void updateEmplpyee(long employeeID, String name) {
+    public void updateEmployee(long employeeID, String name) {
         Employee employee = employeeRepository.findById(employeeID)
                 .orElseThrow(()->new IllegalStateException("employee ID:" + employeeID + " does not exist"));
 
@@ -88,6 +88,11 @@ public class EmployeeService {
         Department department = departmentRepository.findById(departmentID)
                 .orElseThrow(()->new IllegalStateException("department ID:" + departmentID + " does not exist"));
         employee.enrollDepartment(department);
-//        employeeRepository.save(employee);
+        employeeRepository.save(employee);
+    }
+
+    public void createEmployeeWithDepartment(Employee employee, Long departmentID) {
+        addNewEmployee(employee);
+        updateEmployeeDepartment(employee.getId(), departmentID);
     }
 }

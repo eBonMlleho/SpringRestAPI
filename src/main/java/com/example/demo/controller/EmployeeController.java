@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.EmployeeDepartmentDTO;
+import com.example.demo.exception.ApiRequestException;
 import com.example.demo.model.Employee;
 import com.example.demo.service.EmployeeService;
 import org.modelmapper.ModelMapper;
@@ -26,46 +27,86 @@ public class EmployeeController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<EmployeeDepartmentDTO>> getAll() {
-        return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
+    public ResponseEntity<List<EmployeeDepartmentDTO>> getAll(){
+        try{
+            // DTO logic is in service layer
+            return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
+        }catch (Exception e){
+            throw new ApiRequestException(e.getMessage());
+        }
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDepartmentDTO> getEmployeeById(@PathVariable(name = "id") Long id) {
-        Employee employee = employeeService.getEmployeeById(id);
-        // convert entity to DTO
-        EmployeeDepartmentDTO employeeResponse = modelMapper.map(employee, EmployeeDepartmentDTO.class);
-        return new ResponseEntity<>(employeeResponse, HttpStatus.OK);
+        try{
+            Employee employee = employeeService.getEmployeeById(id);
+            // convert entity to DTO by using modelMapper
+            EmployeeDepartmentDTO employeeResponse = modelMapper.map(employee, EmployeeDepartmentDTO.class);
+            return new ResponseEntity<>(employeeResponse, HttpStatus.OK);
+        }catch (Exception e){
+            throw new ApiRequestException(e.getMessage());
+        }
     }
 
 
     @PostMapping()
     public ResponseEntity<EmployeeDepartmentDTO> createEmployee(@RequestBody Employee newEmployee) {
-        Employee employee = employeeService.addNewEmployee(newEmployee);
-        // convert entity to DTO
-        return new ResponseEntity<>(modelMapper.map(employee, EmployeeDepartmentDTO.class), HttpStatus.CREATED);
+        try{
+            Employee employee = employeeService.addNewEmployee(newEmployee);
+            // convert entity to DTO
+            return new ResponseEntity<>(modelMapper.map(employee, EmployeeDepartmentDTO.class), HttpStatus.CREATED);
+        }catch (Exception e){
+            throw new ApiRequestException(e.getMessage());
+        }
+    }
+
+    @PostMapping("{departmentID}")
+        public ResponseEntity<EmployeeDepartmentDTO> createEmployeeWithDepartment(
+                @PathVariable("departmentID") Long departmentID, @RequestBody Employee employee) {
+        try{
+            employeeService.createEmployeeWithDepartment(employee, departmentID);
+            // convert entity to DTO
+            return new ResponseEntity<>(modelMapper.map(employee, EmployeeDepartmentDTO.class), HttpStatus.CREATED);
+        }catch (Exception e){
+            throw new ApiRequestException(e.getMessage());
+        }
     }
 
 
     @PutMapping("/{employeeID}")
-    void updateEmployee(@PathVariable("employeeID") Long id, @RequestParam(required = false) String name){
-        employeeService.updateEmplpyee(id, name);
+    ResponseEntity updateEmployee(@PathVariable("employeeID") Long id, @RequestParam(required = false) String name){
+        try{
+            employeeService.updateEmployee(id, name);
+            return new ResponseEntity("update employee name successful!", HttpStatus.OK);
+        }catch(Exception e){
+            throw new ApiRequestException(e.getMessage());
+        }
     }
 
-    @PutMapping("/{employeeID}/departments/{departmentID}")
-    void updateEmployeeWithDepartment(@PathVariable("employeeID") Long employeeID,
+
+    @PutMapping("/{employeeID}/department/{departmentID}")
+    ResponseEntity updateEmployeeWithDepartment(@PathVariable("employeeID") Long employeeID,
                                       @PathVariable("departmentID") Long departmentID,
                                       @RequestParam(required = false) String name){
-        employeeService.updateEmployeeDepartment(employeeID, departmentID);
+        try{
+            employeeService.updateEmployeeDepartment(employeeID, departmentID);
+            return new ResponseEntity("Assign employee to department operation successful!", HttpStatus.OK);
+        }catch (Exception e){
+            throw new ApiRequestException(e.getMessage());
+        }
     }
 
 
     @DeleteMapping("/{employeeID}")
     public ResponseEntity deleteStudent(@PathVariable("employeeID") Long id){
-        employeeService.deleteEmployee(id);
-        return new ResponseEntity<>("delete successful", HttpStatus.OK);
+        try{
+            employeeService.deleteEmployee(id);
+            return new ResponseEntity<>("delete successful", HttpStatus.OK);
+        }catch(Exception e){
+            throw new ApiRequestException(e.getMessage());
+        }
     }
+
 
     /**
      * this is for testing purpose. use it when comparing DTO and ModelMapper and ResponseEntity
@@ -75,13 +116,5 @@ public class EmployeeController {
     public List<Employee> getEverything(){
         return employeeService.getEmployeesEverything();
     }
-
-//    /**
-//     * basic test
-//     */
-//    @GetMapping("/")
-//    public String index(){
-//        return "Greetings from Spring Boot 你好";
-//    }
 }
 

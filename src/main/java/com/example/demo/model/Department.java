@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,7 +30,7 @@ public class Department {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "departments")
-    private Set<Employee> employees = new HashSet<>();
+    private List<Employee> employees = new ArrayList<>();
 
 
 
@@ -39,7 +39,7 @@ public class Department {
         this.name = name;
     }
 
-    public Set<Employee> getEmployees() {
+    public List<Employee> getEmployees() {
         return employees;
     }
 

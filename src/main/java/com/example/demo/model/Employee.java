@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -37,7 +37,7 @@ public class Employee {
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "department_id")
     )
-    private Set<Department> departments = new HashSet<>();
+    private List<Department> departments = new ArrayList<>();
 
 
     public Employee(String name, String email, String secret) {
@@ -46,11 +46,12 @@ public class Employee {
         this.secret = secret;
     }
 
-    public Set<Department> getDepartments() {
+    public List<Department> getDepartments() {
         return departments;
     }
 
     public void enrollDepartment(Department department) {
-        departments.add(department);
+        if(!departments.contains(department))
+            departments.add(department);
     }
 }
