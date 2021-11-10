@@ -4,7 +4,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.EmployeeDepartmentDTO;
 import com.example.demo.exception.ApiRequestException;
 import com.example.demo.model.Employee;
-import com.example.demo.service.EmployeeService;
+import com.example.demo.service.EmployeeServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +18,10 @@ import java.util.List;
 public class EmployeeController {
     private final ModelMapper modelMapper;
 
-    private final EmployeeService employeeService;
+    private final EmployeeServiceImpl employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService, ModelMapper modelMapper) {
+    public EmployeeController(EmployeeServiceImpl employeeService, ModelMapper modelMapper) {
         this.employeeService = employeeService;
         this.modelMapper = modelMapper;
     }

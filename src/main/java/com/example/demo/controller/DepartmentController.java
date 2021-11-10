@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Department;
-import com.example.demo.service.DepartmentService;
+import com.example.demo.service.DepartmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +14,10 @@ import java.util.List;
 @RequestMapping("/departments")
 public class DepartmentController {
 
-    private final DepartmentService departmentService;
+    private final DepartmentServiceImpl departmentService;
 
     @Autowired
-    public DepartmentController(DepartmentService departmentService) {
+    public DepartmentController(DepartmentServiceImpl departmentService) {
         this.departmentService = departmentService;
     }
 
