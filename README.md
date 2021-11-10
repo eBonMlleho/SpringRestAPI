@@ -1,8 +1,7 @@
 # SpringRestAPI
 
-Main entity: employee
-
-(comprehensive implementation of RESTAPI for Employee and easy on Department)
+Main entity: Employee
+minor: Department
 
 ### Features
 DTO √ \
