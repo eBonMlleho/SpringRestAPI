@@ -30,7 +30,7 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeDepartmentDTO>> getAll(){
         try{
             // DTO logic is in service layer
-            return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
+            return new ResponseEntity<>(employeeService.getEmployeesDTO(), HttpStatus.OK);
         }catch (Exception e){
             throw new ApiRequestException(e.getMessage());
         }
@@ -73,7 +73,7 @@ public class EmployeeController {
     }
 
 
-    @PutMapping("/{employeeID}")
+    @PutMapping("/{employeeID}") // http://localhost:8080/employees/4?name=Faker
     ResponseEntity updateEmployee(@PathVariable("employeeID") Long id, @RequestParam(required = false) String name){
         try{
             employeeService.updateEmployee(id, name);

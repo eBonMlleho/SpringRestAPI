@@ -31,7 +31,7 @@ public class Employee {
 //    }
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "employee_department",
             joinColumns = @JoinColumn(name = "employee_id"),

@@ -29,11 +29,8 @@ public class Department {
 //    }
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "departments")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "departments")
     private List<Employee> employees = new ArrayList<>();
-
-
-
 
     public Department(String name) {
         this.name = name;

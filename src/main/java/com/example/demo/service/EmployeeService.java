@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    List<EmployeeDepartmentDTO> getEmployees();
+    List<EmployeeDepartmentDTO> getEmployeesDTO();
 
     Employee getEmployeeById(long id);
 

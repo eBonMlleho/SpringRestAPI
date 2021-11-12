@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     // this method used convertEntityToDTO method to populate DTO from employees
-    public List<EmployeeDepartmentDTO> getEmployees(){
+    public List<EmployeeDepartmentDTO> getEmployeesDTO(){
         return employeeRepository.findAll().stream().map(this::convertEntityToDTO).collect(Collectors.toList());
     }
 
